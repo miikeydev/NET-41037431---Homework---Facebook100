@@ -1,0 +1,61 @@
+network,attribute,fraction_removed,accuracy,n_removed,n_classes
+Duke14,dorm,0.1,0.5351,699,135
+Duke14,dorm,0.2,0.5425,1399,135
+Duke14,dorm,0.3,0.5081,2098,135
+Duke14,gender,0.1,0.7054,903,2
+Duke14,gender,0.2,0.6646,1807,2
+Duke14,gender,0.3,0.6754,2711,2
+Caltech36,dorm,0.1,0.9492,59,8
+Caltech36,dorm,0.2,0.822,118,8
+Caltech36,dorm,0.3,0.8933,178,8
+Caltech36,gender,0.1,0.6812,69,2
+Caltech36,gender,0.2,0.6547,139,2
+Caltech36,gender,0.3,0.6651,209,2
+Amherst41,dorm,0.1,0.3333,129,34
+Amherst41,dorm,0.2,0.3333,258,34
+Amherst41,dorm,0.3,0.3023,387,34
+Amherst41,gender,0.1,0.5764,203,2
+Amherst41,gender,0.2,0.6133,406,2
+Amherst41,gender,0.3,0.6256,609,2
+Reed98,dorm,0.1,0.46,50,28
+Reed98,dorm,0.2,0.4158,101,28
+Reed98,dorm,0.3,0.4342,152,28
+Reed98,gender,0.1,0.5581,86,2
+Reed98,gender,0.2,0.5665,173,2
+Reed98,gender,0.3,0.5792,259,2
+Simmons81,dorm,0.1,0.4,85,10
+Simmons81,dorm,0.2,0.4503,171,10
+Simmons81,dorm,0.3,0.3633,256,10
+Simmons81,gender,0.1,0.9929,141,2
+Simmons81,gender,0.2,0.9894,283,2
+Simmons81,gender,0.3,0.9906,424,2
+Haverford76,dorm,0.1,0.5686,102,15
+Haverford76,dorm,0.2,0.5415,205,15
+Haverford76,dorm,0.3,0.526,308,15
+Haverford76,gender,0.1,0.6444,135,2
+Haverford76,gender,0.2,0.6519,270,2
+Haverford76,gender,0.3,0.6346,405,2
+Auburn71,dorm,0.1,0.7657,589,79
+Auburn71,dorm,0.2,0.7583,1179,79
+Auburn71,dorm,0.3,0.7535,1769,79
+Auburn71,gender,0.1,0.5669,1741,2
+Auburn71,gender,0.2,0.5974,3482,2
+Auburn71,gender,0.3,0.5725,5223,2
+Vassar85,dorm,0.1,0.7322,239,13
+Vassar85,dorm,0.2,0.7427,478,13
+Vassar85,dorm,0.3,0.7099,717,13
+Vassar85,gender,0.1,0.6308,279,2
+Vassar85,gender,0.2,0.6004,558,2
+Vassar85,gender,0.3,0.5938,837,2
+Johns Hopkins55,dorm,0.1,0.4323,303,57
+Johns Hopkins55,dorm,0.2,0.3476,607,57
+Johns Hopkins55,dorm,0.3,0.3703,910,57
+Johns Hopkins55,gender,0.1,0.6371,474,2
+Johns Hopkins55,gender,0.2,0.6276,948,2
+Johns Hopkins55,gender,0.3,0.6561,1422,2
+MIT8,dorm,0.1,0.7055,489,63
+MIT8,dorm,0.2,0.682,978,63
+MIT8,dorm,0.3,0.6783,1467,63
+MIT8,gender,0.1,0.6632,579,2
+MIT8,gender,0.2,0.679,1159,2
+MIT8,gender,0.3,0.6837,1739,2

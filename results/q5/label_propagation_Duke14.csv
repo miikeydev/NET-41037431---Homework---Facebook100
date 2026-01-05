@@ -1,0 +1,7 @@
+network,attribute,fraction_removed,accuracy,n_removed,n_classes
+Duke14,dorm,0.1,0.5351,699,135
+Duke14,dorm,0.2,0.5425,1399,135
+Duke14,dorm,0.3,0.5081,2098,135
+Duke14,gender,0.1,0.7054,903,2
+Duke14,gender,0.2,0.6646,1807,2
+Duke14,gender,0.3,0.6754,2711,2
