@@ -73,7 +73,13 @@ def evaluate_one_metric(G_train, removed_set, metric_name, ks):
     Predictor = METRICS[metric_name]
     pred = Predictor(G_train).fit()
 
-    candidates = generate_candidate_pairs(G_train)
+    candidates = list(generate_candidate_pairs(G_train))
+    
+    MAX_CANDIDATES = 100000
+    if len(candidates) > MAX_CANDIDATES:
+        random.shuffle(candidates)
+        candidates = candidates[:MAX_CANDIDATES]
+
     scored = []
     for (u, v) in candidates:
         s = pred.score(u, v)
@@ -84,13 +90,12 @@ def evaluate_one_metric(G_train, removed_set, metric_name, ks):
 
     max_k = max(ks)
     top_edges = [edge_key(u, v) for (u, v, _) in scored[:max_k]]
+    
     top_prefix = []
-    res = []
-
-    top_set = set()
     for e in top_edges:
         top_prefix.append(e)
 
+    res = []
     for k in ks:
         topk = set(top_prefix[:k])
         tp = len(topk & removed_set)
@@ -189,8 +194,9 @@ def plot_curves(rows, out_dir):
 def parse_args():
     p = argparse.ArgumentParser()
     p.add_argument("--data-dir", default="data")
-    p.add_argument("--graphs", nargs="*", default=None, help='Examples: Caltech36 MIT8 "Johns Hopkins55"')
-    p.add_argument("--fractions", nargs="*", type=float, default=[0.05, 0.1, 0.15, 0.2])
+    p.add_argument("--graphs", nargs="*", default=["Caltech36", "UNC28", "Reed98"], 
+                   help='Graphs to analyze')
+    p.add_argument("--fractions", nargs="*", type=float, default=[0.1])
     p.add_argument("--ks", nargs="*", type=int, default=[50, 100, 200, 300, 400])
     p.add_argument("--metrics", nargs="*", default=["cn", "jaccard", "aa"])
     p.add_argument("--seed", type=int, default=42)
