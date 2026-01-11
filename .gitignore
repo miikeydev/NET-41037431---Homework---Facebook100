@@ -8,7 +8,7 @@ __pycache__/
 .eggs/
 .pytest_cache/
 
-# LaTeX files temporaires
+# LaTeX files
 Report/*.aux
 Report/*.log
 Report/*.out
@@ -20,8 +20,6 @@ Report/*.toc
 # VS Code
 .vscode/
 
-# Data files (trop volumineux, à télécharger séparément)
-data/
 
 # OS
 .DS_Store
