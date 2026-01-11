@@ -71,9 +71,9 @@
 
 Les réseaux sociaux numériques constituent un terrain d'observation privilégié pour comprendre les dynamiques relationnelles au sein de populations structurées. Le dataset Facebook100, collecté en 2005, offre une photographie unique des graphes d'amitié de 100 campus universitaires américains avant l'ouverture de la plateforme au grand public. Chaque réseau encode non seulement les connexions entre utilisateurs, mais également des attributs socio-démographiques tels que le dortoir de résidence, l'année de promotion, la filière d'études ou encore le genre.
 
-L'objectif de cette étude est d'explorer les mécanismes de formation des liens sociaux au sein de ces communautés universitaires. Plutôt que d'adopter une approche statistique globale consistant à agréger les résultats sur l'ensemble des graphes, nous privilégions une démarche comparative ciblée. Cette méthodologie permet d'analyser comment la topologie spécifique de chaque réseau influence la performance des algorithmes de prédiction de liens et de détection de communautés.
+L'objectif de cette étude est d'explorer les mécanismes de formation des liens sociaux au sein de ces communautés universitaires. Notre méthodologie combine deux niveaux d'analyse complémentaires. D'une part, nous conduisons une analyse statistique globale sur un ensemble de 15 réseaux représentatifs, couvrant un spectre large de tailles et de densités. D'autre part, nous approfondissons certains cas contrastés pour mettre en évidence comment la topologie spécifique de chaque réseau influence la performance des algorithmes de prédiction de liens et de détection de communautés.
 
-Notre analyse repose sur trois réseaux aux profils contrastés. Caltech36, avec ses 762 n\oe uds et une densité de 5.7\%, représente une petite communauté soudée caractéristique des instituts technologiques d'élite. À l'opposé, UNC28 (University of North Carolina) compte 18\,158 n\oe uds pour une densité inférieure à 0.01\%, illustrant la structure dispersée des grandes universités publiques. Enfin, Reed98 occupe une position intermédiaire avec 962 n\oe uds et servira à valider nos hypothèses sur la structure communautaire.
+Les 15 campus sélectionnés couvrent l'ensemble du spectre des universités américaines : des petits instituts d'élite comme Caltech36 (762 n\oe uds) ou Reed98 (962 n\oe uds) aux grandes universités publiques comme Texas84 (36\,364 n\oe uds) ou UGA50 (24\,380 n\oe uds), en passant par des campus de taille intermédiaire comme MIT8 (6\,402 n\oe uds) ou Duke14 (9\,885 n\oe uds). Cette diversité garantit la robustesse de nos conclusions.
 
 %======================================================================
 \section{Caractérisation topologique des réseaux}
@@ -100,7 +100,7 @@ MIT8 & 6\,402 & 251\,230 & 1.23\% & 0.180 & 0.272 \\
 
 On observe que la densité s'effondre drastiquement avec la taille du réseau, passant de 5.7\% pour Caltech à seulement 1.2\% pour MIT. Ce résultat s'interprète aisément : le nombre de relations qu'un individu peut maintenir est cognitivement limité (nombre de Dunbar), tandis que le nombre de paires possibles croît quadratiquement avec la population. En revanche, le coefficient de clustering local demeure uniformément élevé, oscillant entre 0.27 et 0.41 indépendamment de la taille du campus.
 
-Cette combinaison caractéristique --- faible densité globale associée à un fort clustering local --- constitue la signature des réseaux dits \textit{Small World}. Les étudiants forment des cliques locales très soudées (groupes d'amis, clubs, équipes sportives) qui sont interconnectées par quelques liens longs, assurant ainsi une faible distance moyenne entre n'importe quelle paire d'individus.
+Cette combinaison caractéristique (faible densité globale associée à un fort clustering local) constitue la signature des réseaux dits \textit{Small World}. Les étudiants forment des cliques locales très soudées (groupes d'amis, clubs, équipes sportives) qui sont interconnectées par quelques liens longs, assurant ainsi une faible distance moyenne entre n'importe quelle paire d'individus.
 
 \subsection{Distribution des degrés et structure hiérarchique}
 
@@ -163,14 +163,14 @@ L'analyse systématique sur l'ensemble des 100 réseaux du dataset révèle une 
 \label{fig:assort_dist}
 \end{figure}
 
-Le statut institutionnel (étudiant versus personnel académique) génère la ségrégation la plus marquée, avec une médiane d'assortativité proche de 0.35. Cette barrière hiérarchique apparaît comme structurelle : les étudiants tissent leurs liens quasi-exclusivement entre eux, tout comme le corps enseignant. Le dortoir de résidence constitue le second facteur d'homophilie, avec une médiane autour de 0.17, confirmant l'importance de la proximité géographique immédiate dans la création des amitiés.
+Le statut institutionnel (étudiant versus personnel académique) génère la ségrégation la plus marquée, avec une médiane d'assortativité de 0.32. Cette barrière hiérarchique apparaît comme structurelle : les étudiants tissent leurs liens quasi-exclusivement entre eux, tout comme le corps enseignant. Le dortoir de résidence constitue le second facteur d'homophilie, avec une médiane de 0.17, confirmant l'importance de la proximité géographique immédiate dans la création des amitiés.
 
 En revanche, le genre ne constitue pas un facteur structurant des réseaux d'amitié universitaires. Comme l'illustre la Figure~\ref{fig:gender_assort}, la distribution de l'assortativité par genre est centrée sur zéro, attestant de la mixité des relations sociales sur les campus américains de 2005.
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.7\textwidth]{gender_assortativity_distribution.png}
-\caption{Distribution de l'assortativité par genre --- centrée sur zéro}
+\caption{Distribution de l'assortativité par genre (centrée sur zéro)}
 \label{fig:gender_assort}
 \end{figure}
 
@@ -189,80 +189,114 @@ Le protocole expérimental consiste à supprimer aléatoirement 10\% des arêtes
 
 \subsection{Influence de la topologie sur les performances}
 
-Les résultats obtenus révèlent une dépendance marquée entre la densité du réseau et la métrique optimale. Le Tableau~\ref{tab:link_pred} synthétise les précisions obtenues pour les 50 meilleures prédictions.
+Les résultats obtenus sur l'ensemble des 15 réseaux révèlent une dépendance marquée entre la densité du réseau et la métrique optimale. Le Tableau~\ref{tab:link_pred_global} présente les performances moyennes sur l'ensemble du dataset, tandis que le Tableau~\ref{tab:link_pred} détaille les résultats pour des réseaux représentatifs de différents régimes topologiques.
 
 \begin{table}[H]
 \centering
-\caption{Precision@50 selon le réseau et la métrique}
-\label{tab:link_pred}
-\begin{tabular}{lccc}
+\caption{Precision@50 moyenne sur les 15 réseaux analysés}
+\label{tab:link_pred_global}
+\begin{tabular}{lc}
 \toprule
-\textbf{Réseau} & \textbf{Common Neighbors} & \textbf{Jaccard} & \textbf{Adamic-Adar} \\
+\textbf{Métrique} & \textbf{Precision@50 moyenne} \\
 \midrule
-Caltech36 (dense) & \textbf{60\%} & 42\% & \textbf{60\%} \\
-Reed98 (moyen) & 42\% & 40\% & \textbf{44\%} \\
-UNC28 (dispersé) & 22\% & \textbf{42\%} & 30\% \\
+Common Neighbors & 39.3\% \\
+Jaccard & 35.8\% \\
+Adamic-Adar & \textbf{42.5\%} \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-Sur Caltech36, réseau dense et communautaire, les métriques non-normalisées (CN et AA) dominent nettement avec 60\% de précision, contre seulement 42\% pour Jaccard. Dans une petite communauté où tout le monde se connaît, le nombre absolu d'amis communs constitue un indicateur fiable de proximité sociale. La normalisation opérée par Jaccard s'avère ici contre-productive.
+À l'échelle globale, Adamic-Adar domine légèrement avec 42.5\% de précision moyenne, suivi de Common Neighbors (39.3\%) et Jaccard (35.8\%). Cependant, cette moyenne masque une réalité plus nuancée qui se révèle dans l'analyse par type de réseau.
+
+\begin{table}[H]
+\centering
+\caption{Precision@50 selon le réseau et la métrique : analyse comparative}
+\label{tab:link_pred}
+\begin{tabular}{lcccc}
+\toprule
+\textbf{Réseau} & \textbf{N\oe uds} & \textbf{CN} & \textbf{Jaccard} & \textbf{AA} \\
+\midrule
+Caltech36 (dense) & 762 & \textbf{72\%} & 38\% & 62\% \\
+Rice31 (dense) & 4\,083 & 52\% & 36\% & \textbf{74\%} \\
+Swarthmore42 & 1\,657 & 42\% & \textbf{76\%} & 42\% \\
+MIT8 & 6\,402 & 44\% & 42\% & \textbf{46\%} \\
+UNC28 (dispersé) & 18\,158 & 16\% & \textbf{48\%} & 26\% \\
+Texas84 (très grand) & 36\,364 & 34\% & 32\% & \textbf{34\%} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Sur Caltech36, réseau dense et communautaire, Common Neighbors atteint un score remarquable de 72\%, suivi d'Adamic-Adar à 62\%. Jaccard ne dépasse pas 38\%. Dans cette petite communauté où le clustering est élevé (0.41), le nombre absolu d'amis communs constitue un indicateur fiable de proximité sociale. La normalisation opérée par Jaccard s'avère ici contre-productive car elle pénalise les paires très connectées.
 
 \begin{figure}[H]
 \centering
 \begin{subfigure}[b]{0.48\textwidth}
     \includegraphics[width=\textwidth]{Caltech36_f0.1_comparison_precision.png}
-    \caption{Caltech36 --- réseau dense}
+    \caption{Caltech36 : réseau dense (762 n\oe uds)}
 \end{subfigure}
 \hfill
 \begin{subfigure}[b]{0.48\textwidth}
     \includegraphics[width=\textwidth]{UNC28_f0.1_comparison_precision.png}
-    \caption{UNC28 --- réseau dispersé}
+    \caption{UNC28 : réseau dispersé (18\,158 n\oe uds)}
 \end{subfigure}
 \caption{Courbes Precision@$k$ illustrant l'inversion de performance selon la densité}
 \label{fig:link_pred}
 \end{figure}
 
-Sur UNC28, la hiérarchie s'inverse de manière spectaculaire. Jaccard atteint 42\% de précision tandis que CN chute à 22\% et AA à 30\%. Ce phénomène s'explique par la présence de \textit{super-hubs} dans les grands réseaux dispersés. Ces étudiants exceptionnellement populaires partagent de nombreux voisins communs avec une grande partie du campus, conduisant CN à prédire --- à tort --- des liens entre individus qui ne se connaissent pas. La normalisation de Jaccard neutralise ce biais en divisant par l'union des voisinages.
+Sur UNC28, la hiérarchie s'inverse de manière spectaculaire. Jaccard atteint 48\% de précision tandis que Common Neighbors chute à seulement 16\% et Adamic-Adar à 26\%. Ce phénomène s'explique par la présence de \textit{super-hubs} dans les grands réseaux dispersés. Ces étudiants exceptionnellement populaires partagent de nombreux voisins communs avec une grande partie du campus, conduisant CN à prédire (à tort) des liens entre individus qui ne se connaissent pas. La normalisation de Jaccard neutralise ce biais en divisant par l'union des voisinages.
 
-Reed98 présente un comportement intermédiaire (Figure~\ref{fig:reed_pred}), avec un léger avantage pour Adamic-Adar qui combine le comptage des voisins communs avec une pondération pénalisant les hubs.
+Le cas de Swarthmore42 est particulièrement intéressant : malgré sa petite taille (1\,657 n\oe uds), Jaccard y domine avec 76\% de précision. Cela suggère que la densité seule n'explique pas tout, et que la structure locale du graphe joue également un rôle déterminant.
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.6\textwidth]{Reed98_f0.1_comparison_precision.png}
-\caption{Reed98 --- comportement intermédiaire entre les deux régimes}
-\label{fig:reed_pred}
+\begin{subfigure}[b]{0.48\textwidth}
+    \includegraphics[width=\textwidth]{Rice31_f0.1_comparison_precision.png}
+    \caption{Rice31 : réseau dense, AA domine (74\%)}
+\end{subfigure}
+\hfill
+\begin{subfigure}[b]{0.48\textwidth}
+    \includegraphics[width=\textwidth]{Swarthmore42_f0.1_comparison_precision.png}
+    \caption{Swarthmore42 : exception où Jaccard domine (76\%)}
+\end{subfigure}
+\caption{Variabilité des performances selon la structure locale du réseau}
+\label{fig:link_pred_var}
 \end{figure}
 
-Cette analyse démontre qu'il n'existe pas de métrique universellement optimale pour la prédiction de liens. Le choix de l'algorithme doit être guidé par les caractéristiques topologiques du réseau étudié : Adamic-Adar pour les communautés denses, Jaccard pour les graphes dispersés à grande échelle.
+Cette analyse démontre qu'il n'existe pas de métrique universellement optimale pour la prédiction de liens. Le choix de l'algorithme doit être guidé par les caractéristiques topologiques du réseau étudié : Adamic-Adar et Common Neighbors pour les communautés denses à fort clustering, Jaccard pour les graphes dispersés à grande échelle où les hubs introduisent des biais systématiques.
 
 %======================================================================
 \section{Inférence d'attributs par propagation de labels}
 %======================================================================
 
-L'algorithme de Label Propagation exploite l'homophilie du réseau pour inférer les attributs manquants. Son principe est simple : chaque n\oe ud non-étiqueté adopte itérativement l'attribut majoritaire parmi ses voisins jusqu'à convergence. Nous évaluons cette approche en masquant aléatoirement 10\%, 20\% et 30\% des labels, puis en mesurant la précision de reconstruction.
+L'algorithme de Label Propagation exploite l'homophilie du réseau pour inférer les attributs manquants. Son principe est simple : chaque n\oe ud non-étiqueté adopte itérativement l'attribut majoritaire parmi ses voisins jusqu'à convergence. Nous évaluons cette approche sur les 15 réseaux en masquant aléatoirement 10\%, 20\% et 30\% des labels, puis en mesurant la précision de reconstruction.
 
 \begin{table}[H]
 \centering
-\caption{Précision de Label Propagation (fraction masquée = 10\%)}
+\caption{Précision de Label Propagation sur 15 réseaux (fraction masquée = 10\%)}
 \label{tab:label_prop}
-\begin{tabular}{lcccc}
+\begin{tabular}{lccccc}
 \toprule
-\textbf{Réseau} & \textbf{Dortoir} & \textbf{Classes} & \textbf{Genre} & \textbf{Classes} \\
+\textbf{Réseau} & \textbf{N\oe uds} & \textbf{Dortoir} & \textbf{Classes} & \textbf{Genre} & \textbf{Classes} \\
 \midrule
-Duke14 & 53.5\% & 135 & 70.5\% & 2 \\
-Caltech36 & \textbf{94.9\%} & 8 & 68.1\% & 2 \\
-MIT8 & 70.6\% & 63 & 66.3\% & 2 \\
-Simmons81 & 40.0\% & 10 & \textbf{99.3\%} & 2 \\
+Caltech36 & 762 & \textbf{94.9\%} & 8 & 68.1\% & 2 \\
+Rice31 & 4\,083 & \textbf{92.1\%} & 9 & 61.5\% & 2 \\
+American75 & 6\,370 & 75.5\% & 25 & 58.4\% & 2 \\
+MIT8 & 6\,402 & 70.6\% & 63 & 66.3\% & 2 \\
+Duke14 & 9\,885 & 53.5\% & 135 & 70.5\% & 2 \\
+UNC28 & 18\,158 & 52.6\% & 93 & 63.1\% & 2 \\
+Texas84 & 36\,364 & 56.9\% & 92 & 61.2\% & 2 \\
+Simmons81 & 1\,510 & 40.0\% & 10 & \textbf{99.3\%} & 2 \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-Les résultats confirment et amplifient les observations faites sur l'homophilie. L'attribut dortoir se propage remarquablement bien à travers le graphe, atteignant 94.9\% de précision sur Caltech malgré 8 classes possibles, et 53.5\% sur Duke avec 135 dortoirs distincts. Cette performance s'explique par la forte corrélation entre voisinage dans le graphe et proximité résidentielle : les colocataires et voisins de palier sont naturellement surreprésentés parmi les amis Facebook.
+Les résultats confirment et amplifient les observations faites sur l'homophilie. L'attribut dortoir se propage remarquablement bien à travers le graphe sur les campus organisés en \textit{Residential Colleges}. Caltech36 atteint 94.9\% de précision malgré 8 dortoirs possibles, et Rice31 culmine à 92.1\% avec 9 résidences. Ces deux universités fonctionnent selon un système de ``maisons'' où les étudiants partagent repas et activités, créant une homophilie résidentielle quasi-parfaite.
 
-Le genre présente une précision plus modeste, oscillant entre 65\% et 70\% sur la plupart des campus. Cette performance, à peine supérieure à un classifieur naïf pondéré par les fréquences de classes, confirme que le genre ne structure pas les réseaux d'amitié.
+Sur les grandes universités comme Duke14 (135 dortoirs) ou UNC28 (93 dortoirs), la précision reste honorable (53-55\%) malgré le nombre élevé de classes. Ramené au hasard (qui donnerait moins de 1\% sur Duke), ce score démontre que la structure du graphe encode efficacement l'information résidentielle.
 
-Le cas de Simmons81 mérite une attention particulière. Sur cette université historiquement féminine, la précision pour le genre atteint 99.3\%. Ce résultat paradoxal ne traduit pas une structure genrée du réseau, mais plutôt la sensibilité de l'algorithme aux déséquilibres de classes : dans un campus presque exclusivement féminin, prédire systématiquement ``femme'' constitue une stratégie gagnante mais peu informative.
+Le genre présente une précision modeste mais constante à travers les campus, oscillant entre 58\% et 70\%. Cette performance, à peine supérieure à un classifieur naïf pondéré par les fréquences de classes, confirme quantitativement que le genre ne structure pas les réseaux d'amitié universitaires.
+
+Le cas de Simmons81 mérite une attention particulière. Sur cette université historiquement féminine, la précision pour le genre atteint 99.3\%, un score apparemment exceptionnel. Ce résultat paradoxal ne traduit cependant pas une structure genrée du réseau, mais plutôt la sensibilité de l'algorithme aux déséquilibres de classes. Dans un campus presque exclusivement féminin, prédire systématiquement ``femme'' constitue une stratégie gagnante mais dénuée de valeur prédictive réelle. Cette observation souligne l'importance d'interpréter les métriques de performance à la lumière de la distribution des classes.
 
 %======================================================================
 \section{Détection de communautés}
@@ -296,14 +330,14 @@ Quel que soit le campus étudié, le genre n'apparaît jamais comme facteur de s
 \section{Conclusion}
 %======================================================================
 
-Cette étude met en évidence la complexité structurelle des réseaux sociaux universitaires et l'impossibilité de les traiter comme un ensemble homogène. Les graphes Facebook100 présentent une variabilité topologique considérable qui conditionne le choix des méthodes d'analyse.
+Cette étude, conduite sur 15 réseaux représentatifs du dataset Facebook100, met en évidence la complexité structurelle des réseaux sociaux universitaires et l'impossibilité de les traiter comme un ensemble homogène. Les graphes analysés couvrent un spectre allant de 762 n\oe uds (Caltech36) à 36\,364 n\oe uds (Texas84), permettant de dégager des conclusions robustes sur l'influence de la taille et de la densité.
 
 Sur le plan topologique, tous les réseaux étudiés présentent les caractéristiques des graphes \textit{Small World} : faible densité globale mais fort clustering local, distribution des degrés en loi de puissance avec présence de hubs structurants. Cependant, l'ampleur de ces phénomènes varie considérablement selon la taille du campus.
 
-Pour la prédiction de liens, nos résultats démontrent l'absence de métrique universellement optimale. Les algorithmes non-normalisés comme Adamic-Adar excellent sur les réseaux denses où le comptage des voisins communs reflète fidèlement la proximité sociale. En revanche, sur les grands graphes dispersés, la normalisation opérée par Jaccard devient indispensable pour filtrer les faux positifs générés par les super-hubs.
+Pour la prédiction de liens, nos résultats sur les 15 graphes démontrent l'absence de métrique universellement optimale. Si Adamic-Adar domine en moyenne (42.5\% de précision), l'analyse granulaire révèle des inversions de performance spectaculaires. Sur les réseaux denses comme Caltech36, Common Neighbors atteint 72\% de précision. Sur les grands réseaux dispersés comme UNC28, Jaccard s'impose avec 48\% tandis que Common Neighbors chute à 16\%. Cette dépendance à la topologie constitue un résultat clé pour le praticien : le choix de l'algorithme doit être guidé par les caractéristiques structurelles du réseau cible.
 
-Du point de vue sociologique, la structure communautaire des campus apparaît dictée par des contraintes physiques (le dortoir de résidence) ou temporelles (l'année de promotion), mais jamais par le genre. Cette mixité sociale structurelle des campus américains en 2005 constitue un résultat robuste, confirmé tant par l'analyse d'homophilie que par la détection de communautés.
+Du point de vue sociologique, la structure communautaire des campus apparaît dictée par des contraintes physiques (le dortoir de résidence) ou temporelles (l'année de promotion), mais jamais par le genre. Les campus organisés en \textit{Residential Colleges} comme Caltech (94.9\%) ou Rice (92.1\%) présentent une homophilie résidentielle quasi-parfaite. En revanche, la précision sur le genre oscille entre 58\% et 70\% sur tous les campus mixtes, à peine au-dessus du hasard pondéré. Cette mixité sociale structurelle des campus américains en 2005 constitue un résultat robuste, confirmé tant par l'analyse d'homophilie que par la détection de communautés.
 
-Enfin, il convient de mentionner une limite méthodologique de cette étude. L'échantillonnage des paires candidates (plafonné à 100\,000) sur les grands réseaux comme UNC28 introduit une variance dans les résultats de prédiction de liens. Une analyse exhaustive nécessiterait des ressources de calcul significativement plus importantes, mais les tendances observées demeurent qualitativement robustes.
+Enfin, il convient de mentionner une limite méthodologique de cette étude. L'échantillonnage des paires candidates (plafonné à 100\,000) sur les grands réseaux comme Texas84 ou UGA50 introduit une variance dans les résultats de prédiction de liens. Une analyse exhaustive nécessiterait des ressources de calcul significativement plus importantes, mais les tendances observées demeurent qualitativement robustes à travers les 15 réseaux analysés.
 
 \end{document}

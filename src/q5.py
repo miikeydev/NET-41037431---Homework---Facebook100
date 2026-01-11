@@ -11,16 +11,9 @@ from collections import defaultdict
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 OUT_DIR = "results/q5"
 DEFAULT_GRAPHS = [
-    "Duke14",
-    "Caltech36",
-    "Amherst41",
-    "Reed98",
-    "Simmons81",
-    "Haverford76",
-    "Auburn71",
-    "Vassar85",
-    "Johns Hopkins55",
-    "MIT8"
+    "Caltech36", "Reed98", "Simmons81", "Haverford76", "Swarthmore42",
+    "Duke14", "Georgetown15", "Rice31", "MIT8", "American75",
+    "UNC28", "Virginia63", "UGA50", "Texas84", "Maryland58"
 ]
 
 def ensure_dir(path):

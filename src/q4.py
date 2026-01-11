@@ -194,7 +194,10 @@ def plot_curves(rows, out_dir):
 def parse_args():
     p = argparse.ArgumentParser()
     p.add_argument("--data-dir", default="data")
-    p.add_argument("--graphs", nargs="*", default=["Caltech36", "UNC28", "Reed98"], 
+    p.add_argument("--graphs", nargs="*", 
+                   default=["Caltech36", "Reed98", "Simmons81", "Haverford76", "Swarthmore42", 
+                            "Duke14", "Georgetown15", "Rice31", "MIT8", "American75", 
+                            "UNC28", "Virginia63", "UGA50", "Texas84", "Maryland58"], 
                    help='Graphs to analyze')
     p.add_argument("--fractions", nargs="*", type=float, default=[0.1])
     p.add_argument("--ks", nargs="*", type=int, default=[50, 100, 200, 300, 400])
