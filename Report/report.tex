@@ -241,42 +241,42 @@ Adamic-Adar & \textbf{42.5\%} \\
 
 \begin{table}[H]
 \centering
-\caption{Precision@50 selon le réseau et la métrique : analyse comparative}
+\caption{Precision@50 selon le réseau et la métrique : analyse comparative (f=0.1)}
 \label{tab:link_pred}
 \begin{tabular}{lcccc}
 \toprule
 \textbf{Réseau} & \textbf{N\oe uds} & \textbf{CN} & \textbf{Jaccard} & \textbf{AA} \\
 \midrule
-Caltech36 (dense) & 762 & \textbf{72\%} & 38\% & 62\% \\
-Rice31 (dense) & 4\,083 & 52\% & 36\% & \textbf{74\%} \\
+Caltech36 (dense) & 762 & 66\% & 40\% & \textbf{74\%} \\
+Rice31 (dense) & 4\,083 & 52\% & 36\% & \textbf{75\%} \\
 Swarthmore42 & 1\,657 & 42\% & \textbf{76\%} & 42\% \\
-MIT8 & 6\,402 & 44\% & 42\% & \textbf{46\%} \\
-UNC28 (dispersé) & 18\,158 & 16\% & \textbf{48\%} & 26\% \\
-Texas84 (très grand) & 36\,364 & 34\% & 32\% & \textbf{34\%} \\
+MIT8 & 6\,402 & \textbf{48\%} & 20\% & 42\% \\
+UNC28 (dispersé) & 18\,158 & 18\% & 26\% & \textbf{36\%} \\
+Texas84 (très grand) & 36\,364 & \textbf{34\%} & \textbf{34\%} & 28\% \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-Sur Caltech36, réseau dense et communautaire, Common Neighbors atteint un score remarquable de 72\%, suivi d'Adamic-Adar à 62\%. Jaccard ne dépasse pas 38\%. Dans cette petite communauté où le clustering est élevé (0.41), le nombre absolu d'amis communs constitue un indicateur fiable de proximité sociale. La normalisation opérée par Jaccard s'avère ici contre-productive car elle pénalise les paires très connectées.
+Sur Caltech36, réseau dense et communautaire, Adamic-Adar domine avec 74\% de précision, capitalisant sur la structure en cliques interconnectées. Common Neighbors suit de près (66\%), tandis que Jaccard décroche (40\%), pénalisé par sa normalisation excessive dans les zones très denses. Cette tendance se confirme sur Rice31, où AA surclasse ses concurrents (75\% contre 52\% pour CN).
 
 \begin{figure}[H]
 \centering
 \begin{subfigure}[b]{0.48\textwidth}
     \includegraphics[width=\textwidth]{Caltech36_f0.1_comparison_precision.png}
-    \caption{Caltech36 : réseau dense (762 n\oe uds)}
+    \caption{Caltech36 : AA domine dans les réseaux denses}
 \end{subfigure}
 \hfill
 \begin{subfigure}[b]{0.48\textwidth}
     \includegraphics[width=\textwidth]{UNC28_f0.1_comparison_precision.png}
-    \caption{UNC28 : réseau dispersé (18\,158 n\oe uds)}
+    \caption{UNC28 : AA reste robuste sur les réseaux dispersés}
 \end{subfigure}
-\caption{Courbes Precision@$k$ illustrant l'inversion de performance selon la densité}
+\caption{Comparaison des performances de précision}
 \label{fig:link_pred}
 \end{figure}
 
-Sur UNC28, la hiérarchie s'inverse de manière spectaculaire. Jaccard atteint 48\% de précision tandis que Common Neighbors chute à seulement 16\% et Adamic-Adar à 26\%. Ce phénomène s'explique par la présence de \textit{super-hubs} dans les grands réseaux dispersés. Ces étudiants exceptionnellement populaires partagent de nombreux voisins communs avec une grande partie du campus, conduisant CN à prédire (à tort) des liens entre individus qui ne se connaissent pas. La normalisation de Jaccard neutralise ce biais en divisant par l'union des voisinages.
+Sur UNC28, un réseau bien plus grand et dispersé, la hiérarchie évolue. Adamic-Adar maintient sa supériorité (36\%), prouvant la robustesse de sa pondération logarithmique face aux variations de degré. En revanche, Jaccard (26\%) surpasse ici Common Neighbors (18\%), car il parvient mieux à filtrer les faux positifs générés par les ``super-hubs'' omniprésents dans les grands graphes.
 
-Le cas de Swarthmore42 est particulièrement intéressant : malgré sa petite taille (1\,657 n\oe uds), Jaccard y domine avec 76\% de précision. Cela suggère que la densité seule n'explique pas tout, et que la structure locale du graphe joue également un rôle déterminant.
+Le cas de Swarthmore42 (1\,657 n\oe uds) constitue une anomalie remarquable : Jaccard y écrase la concurrence avec 76\% de précision (contre 42\% pour AA/CN). De même, sur le géant Texas84 (36\,000+ n\oe uds), Jaccard et CN font jeu égal (34\%) devant AA (28\%). Ces exceptions confirment que la densité globale n'est pas le seul prédicteur de performance ; la microstructure locale joue un rôle décisif.
 
 \begin{figure}[H]
 \centering
@@ -405,7 +405,7 @@ Enfin, le genre n'a aucun impact sur la formation des communautés (NMI proche d
 
 Cette étude comparative, menée sur un échantillon représentatif de 15 réseaux issus du dataset Facebook100, a permis de caractériser la structure topologique et sociale des interactions universitaires à grande échelle.
 
-Nos analyses confirment l'universalité des propriétés de \textit{Small World} et l'existence d'une structure hiérarchique au sein de ces graphes, tout en soulignant l'impact déterminant de la taille du réseau sur sa densité. La chute drastique de connectivité observée, passant de 5.7\% pour les petits campus à 1.2\% pour les grandes universités, illustre empiriquement les limites cognitives de sociabilisation théorisées par le nombre de Dunbar. Sur le plan algorithmique, nous avons démontré qu'aucune métrique de prédiction de liens ne s'impose universellement : la performance dépend intrinsèquement de la topologie locale, favorisant \textit{Common Neighbors} dans les communautés denses et \textit{Jaccard} dans les graphes dispersés dominés par des \textit{hubs}.
+Nos analyses confirment l'universalité des propriétés de \textit{Small World} et l'existence d'une structure hiérarchique au sein de ces graphes, tout en soulignant l'impact déterminant de la taille du réseau sur sa densité. La chute drastique de connectivité observée, passant de 5.7\% pour les petits campus à 1.2\% pour les grandes universités, illustre empiriquement les limites cognitives de sociabilisation théorisées par le nombre de Dunbar. Sur le plan algorithmique, nous avons démontré la robustesse générale de la métrique \textit{Adamic-Adar} (performante sur Caltech, Rice et UNC28), tout en notant des exceptions notables comme Swarthmore où \textit{Jaccard} s'impose (76\%), confirmant l'importance d'adapter l'outil à la topologie locale.
 
 L'apport principal de ce travail réside dans la hiérarchisation des déterminants sociaux. L'analyse croisée de l'homophilie et de la détection de communautés révèle que la sociabilité étudiante est avant tout régie par la proximité physique et temporelle. Le lieu de résidence s'impose comme le vecteur fondamental de formation des communautés sur la majorité des campus (Caltech, Rice), parfois relayé par l'année de promotion dans des environnements spécifiques (Reed). Si le statut institutionnel érige une barrière macroscopique étanche entre étudiants et personnel, il ne suffit pas à définir la granularité fine des groupes sociaux. À l'inverse, les clivages académiques (filière) ou de genre apparaissent négligeables, dépeignant des campus américains de 2005 où l'intégration sociale transcende les catégories disciplinaires et identitaires.
 
