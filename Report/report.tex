@@ -377,36 +377,36 @@ La détection de communautés vise à partitionner le graphe en groupes de n\oe 
 \centering
 \caption{Scores NMI entre communautés Louvain et attributs réels}
 \label{tab:nmi}
-\begin{tabular}{lccc}
+\begin{tabular}{lccccc}
 \toprule
-\textbf{Réseau} & \textbf{Dortoir} & \textbf{Année} & \textbf{Genre} \\
+\textbf{Réseau} & \textbf{Dortoir} & \textbf{Année} & \textbf{Major} & \textbf{Statut} & \textbf{Genre} \\
 \midrule
-Caltech36 & \textbf{0.685} & 0.104 & 0.013 \\
-Rice31 & \textbf{0.791} & 0.017 & 0.000 \\
-Reed98 & 0.152 & \textbf{0.451} & 0.007 \\
-Smith60 & \textbf{0.495} & 0.187 & 0.007 \\
+Caltech36 & \textbf{0.702} & 0.082 & 0.076 & 0.033 & 0.009 \\
+Rice31 & \textbf{0.751} & 0.024 & 0.049 & 0.011 & 0.001 \\
+Reed98 & 0.126 & \textbf{0.477} & 0.062 & 0.124 & 0.004 \\
+Smith60 & \textbf{0.509} & 0.181 & 0.077 & 0.029 & 0.006 \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-Sur Caltech36 et Rice31, les communautés détectées correspondent presque parfaitement aux dortoirs, avec des scores NMI respectifs de 0.685 et 0.791. Ces deux campus fonctionnent selon un système de \textit{Residential Colleges} ou ``maisons'' qui structure fortement la vie sociale. Les étudiants d'une même résidence partagent repas, activités et espaces communs, créant naturellement des communautés denses.
+Les résultats montrent deux tendances principales concernant l'organisation des communautés.
 
-Reed98 constitue une exception notable. Sur ce campus, c'est l'année de promotion qui structure le graphe social (NMI = 0.451) plutôt que le dortoir (NMI = 0.152). Cette particularité suggère une culture de campus différente où les liens inter-promotions sont plus rares, possiblement en raison de traditions ou d'un curriculum particulièrement exigeant favorisant la solidarité au sein de chaque cohorte.
+D'un côté, le dortoir reste le facteur dominant pour Caltech et Rice (NMI > 0.70). L'algorithme de Louvain retrouve presque exactement les groupes d'étudiants logeant ensemble. De l'autre, pour Reed, c'est l'année de promotion qui prime (NMI $\approx$ 0.48), ce qui indique une vie sociale organisée par tranche d'âge plutôt que par lieu de résidence.
 
-Quel que soit le campus étudié, le genre n'apparaît jamais comme facteur de structuration communautaire, avec des scores NMI systématiquement proches de zéro. Les amitiés universitaires transcendent la dimension genrée, confirmant la mixité sociale structurelle observée dans l'analyse d'homophilie.
+Concernant la filière (\textit{Major}), son faible score NMI (autour de 0.06) confirme qu'elle ne suffit pas à créer des groupes d'amis distincts. Les étudiants de mêmes filières sont connectés, mais restent mélangés aux autres au sein du graphe global.
+
+Le cas du statut (Étudiant/Professeur) est intéressant. Malgré une forte assortativité, son score NMI est bas car l'algorithme de Louvain découpe le réseau en une multitude de petites communautés (groupes d'amis), alors que le statut ne divise le graphe qu'en deux grands blocs. L'algorithme ne peut donc pas s'aligner sur cet attribut trop général, sauf partiellement à Reed (NMI = 0.12) où la séparation est plus marquée.
+
+Enfin, le genre n'a aucun impact sur la formation des communautés (NMI proche de 0), confirmant que les groupes d'amis sont mixtes.
 
 %======================================================================
 \section{Conclusion}
 %======================================================================
 
-Cette étude, conduite sur 15 réseaux représentatifs du dataset Facebook100, met en évidence la complexité structurelle des réseaux sociaux universitaires et l'impossibilité de les traiter comme un ensemble homogène. Les graphes analysés couvrent un spectre allant de 762 n\oe uds (Caltech36) à 36\,364 n\oe uds (Texas84), permettant de dégager des conclusions robustes sur l'influence de la taille et de la densité.
+Cette étude comparative, menée sur un échantillon représentatif de 15 réseaux issus du dataset Facebook100, a permis de caractériser la structure topologique et sociale des interactions universitaires à grande échelle.
 
-Sur le plan topologique, tous les réseaux étudiés présentent les caractéristiques des graphes \textit{Small World} : faible densité globale mais fort clustering local, distribution des degrés en loi de puissance avec présence de hubs structurants. Cependant, l'ampleur de ces phénomènes varie considérablement selon la taille du campus.
+Nos analyses confirment l'universalité des propriétés de \textit{Small World} et l'existence d'une structure hiérarchique au sein de ces graphes, tout en soulignant l'impact déterminant de la taille du réseau sur sa densité. La chute drastique de connectivité observée, passant de 5.7\% pour les petits campus à 1.2\% pour les grandes universités, illustre empiriquement les limites cognitives de sociabilisation théorisées par le nombre de Dunbar. Sur le plan algorithmique, nous avons démontré qu'aucune métrique de prédiction de liens ne s'impose universellement : la performance dépend intrinsèquement de la topologie locale, favorisant \textit{Common Neighbors} dans les communautés denses et \textit{Jaccard} dans les graphes dispersés dominés par des \textit{hubs}.
 
-Pour la prédiction de liens, nos résultats sur les 15 graphes démontrent l'absence de métrique universellement optimale. Si Adamic-Adar domine en moyenne (42.5\% de précision), l'analyse granulaire révèle des inversions de performance spectaculaires. Sur les réseaux denses comme Caltech36, Common Neighbors atteint 72\% de précision. Sur les grands réseaux dispersés comme UNC28, Jaccard s'impose avec 48\% tandis que Common Neighbors chute à 16\%. Cette dépendance à la topologie constitue un résultat clé pour le praticien : le choix de l'algorithme doit être guidé par les caractéristiques structurelles du réseau cible.
-
-Du point de vue sociologique, la structure communautaire des campus apparaît dictée par des contraintes physiques (le dortoir de résidence) ou temporelles (l'année de promotion), mais jamais par le genre. Les campus organisés en \textit{Residential Colleges} comme Caltech (94.9\%) ou Rice (92.1\%) présentent une homophilie résidentielle quasi-parfaite. En revanche, la précision sur le genre oscille entre 58\% et 70\% sur tous les campus mixtes, à peine au-dessus du hasard pondéré. Cette mixité sociale structurelle des campus américains en 2005 constitue un résultat robuste, confirmé tant par l'analyse d'homophilie que par la détection de communautés.
-
-Enfin, il convient de mentionner une limite méthodologique de cette étude. L'échantillonnage des paires candidates (plafonné à 100\,000) sur les grands réseaux comme Texas84 ou UGA50 introduit une variance dans les résultats de prédiction de liens. Une analyse exhaustive nécessiterait des ressources de calcul significativement plus importantes, mais les tendances observées demeurent qualitativement robustes à travers les 15 réseaux analysés.
+L'apport principal de ce travail réside dans la hiérarchisation des déterminants sociaux. L'analyse croisée de l'homophilie et de la détection de communautés révèle que la sociabilité étudiante est avant tout régie par la proximité physique et temporelle. Le lieu de résidence s'impose comme le vecteur fondamental de formation des communautés sur la majorité des campus (Caltech, Rice), parfois relayé par l'année de promotion dans des environnements spécifiques (Reed). Si le statut institutionnel érige une barrière macroscopique étanche entre étudiants et personnel, il ne suffit pas à définir la granularité fine des groupes sociaux. À l'inverse, les clivages académiques (filière) ou de genre apparaissent négligeables, dépeignant des campus américains de 2005 où l'intégration sociale transcende les catégories disciplinaires et identitaires.
 
 \end{document}

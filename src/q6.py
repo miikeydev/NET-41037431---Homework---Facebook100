@@ -4,6 +4,7 @@ import argparse
 import networkx as nx
 import community.community_louvain as louvain
 from sklearn.metrics import normalized_mutual_info_score
+from tqdm import tqdm
 
 def load_lcc(path):
     G = nx.read_gml(path)
@@ -25,15 +26,14 @@ def run_q6(data_dir, graphs):
     print(f"{'Network':<15} | {'Attribute':<12} | {'NMI Score':<10}")
     print("-" * 45)
     
-    attributes = ["dorm", "year", "major", "gender"]
+    attributes = ["student_fac", "major_index", "dorm", "year", "gender"]
     results = []
 
-    for g_name in graphs:
+    for g_name in tqdm(graphs, desc="Analyzing networks", unit="graph"):
         path = os.path.join(data_dir, f"{g_name}.gml")
         if not os.path.exists(path): continue
             
         G = load_lcc(path)
-        
         partition = louvain.best_partition(G)
         
         for attr in attributes:
@@ -41,17 +41,32 @@ def run_q6(data_dir, graphs):
             if len(valid_nodes) < 50: continue
 
             pred_labels = [partition[n] for n in valid_nodes]
-            
             nmi = normalized_mutual_info_score(true_labels, pred_labels)
-            
-            print(f"{g_name:<15} | {attr:<12} | {nmi:.4f}")
             results.append([g_name, attr, nmi])
 
     os.makedirs("results/q6", exist_ok=True)
-    with open("results/q6/community_nmi.csv", "w", newline="") as f:
+    csv_path = "results/q6/community_nmi.csv"
+    
+    with open(csv_path, "w", newline="") as f:
         writer = csv.writer(f)
         writer.writerow(["network", "attribute", "nmi"])
         writer.writerows(results)
+
+    print(f"\nResults saved to: {csv_path}")
+    
+    print("\n" + "="*60)
+    print(f"{'Network':<15} | {'Attribute':<12} | {'NMI Score':<10}")
+    print("="*60)
+    
+    results.sort(key=lambda x: (x[0], -x[2]))
+    
+    current_net = ""
+    for row in results:
+        net, attr, nmi = row
+        net_display = net if net != current_net else ""
+        print(f"{net_display:<15} | {attr:<12} | {nmi:.4f}")
+        current_net = net
+    print("="*60 + "\n")
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
