@@ -169,11 +169,32 @@ L'analyse systématique sur l'ensemble des 100 réseaux du dataset révèle une 
     \includegraphics[width=\textwidth]{dorm_assortativity_distribution.png}
     \caption{Dortoir}
 \end{subfigure}
-\caption{Distribution de l'assortativité par attribut sur les 100 campus}
+\caption{Distribution de l'assortativité pour les attributs structurants}
 \label{fig:assort_dist}
 \end{figure}
 
 Le statut institutionnel (étudiant versus personnel académique) génère la ségrégation la plus marquée, avec une médiane d'assortativité de 0.32. Cette barrière hiérarchique apparaît comme structurelle : les étudiants tissent leurs liens quasi-exclusivement entre eux, tout comme le corps enseignant. Le dortoir de résidence constitue le second facteur d'homophilie, avec une médiane de 0.17, confirmant l'importance de la proximité géographique immédiate dans la création des amitiés.
+
+Une analyse complémentaire sur la filière d'études (\textit{Major}) et le degré (\textit{Degree}) permet de compléter cette hiérarchie sociale. La Figure~\ref{fig:assort_secondary} illustre ces distributions.
+
+\begin{figure}[H]
+\centering
+\begin{subfigure}[b]{0.48\textwidth}
+    \includegraphics[width=\textwidth]{major_index_assortativity_distribution.png}
+    \caption{Filière (Major)}
+\end{subfigure}
+\hfill
+\begin{subfigure}[b]{0.48\textwidth}
+    \includegraphics[width=\textwidth]{degree_assortativity_distribution.png}
+    \caption{Degré}
+\end{subfigure}
+\caption{Distribution de l'assortativité pour les attributs secondaires}
+\label{fig:assort_secondary}
+\end{figure}
+
+Contrairement au dortoir, la filière d'études joue un rôle étonnamment faible dans la formation des liens, avec une assortativité médiane autour de 0.05. Cela suggère que sur les campus américains de 2005, la vie sociale s'organise davantage autour du lieu de vie que du lieu d'études. Quelques exceptions existent néanmoins, comme Carnegie49 (un institut technologique) où l'assortativité par filière atteint 0.13, indiquant une culture plus centrée sur les spécialités académiques.
+
+L'assortativité par degré est quant à elle quasiment nulle (moyenne proche de 0.06). Ce résultat est important : il indique l'absence de phénomène de ``club des riches'' (\textit{Rich Club}). Les étudiants très populaires ne se connectent pas exclusivement entre eux, mais tissent des liens à travers toute la hiérarchie de popularité, jouant ainsi leur rôle de ponts sociaux.
 
 En revanche, le genre ne constitue pas un facteur structurant des réseaux d'amitié universitaires. Comme l'illustre la Figure~\ref{fig:gender_assort}, la distribution de l'assortativité par genre est concentrée dans l'intervalle [0, 0.10], avec une moyenne légèrement positive (environ 0.02). Cette valeur, bien que techniquement non nulle, reste négligeable comparée aux coefficients observés pour le statut (0.32) ou le dortoir (0.17). On peut donc considérer que le genre n'exerce qu'une influence marginale sur la formation des amitiés.
 
