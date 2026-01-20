@@ -346,27 +346,31 @@ L'algorithme de Label Propagation exploite l'homophilie du réseau pour inférer
 
 \begin{table}[H]
 \centering
-\caption{Précision de Label Propagation sur 15 réseaux (fraction masquée = 10\%)}
+\caption{Précision de Label Propagation sur 8 réseaux (fraction masquée = 10\%)}
 \label{tab:label_prop}
-\begin{tabular}{lccccc}
+\begin{adjustbox}{max width=\textwidth}
+\begin{tabular}{lccccccc}
 \toprule
-\textbf{Réseau} & \textbf{N\oe uds} & \textbf{Dortoir} & \textbf{Classes} & \textbf{Genre} & \textbf{Classes} \\
+\textbf{Réseau} & \textbf{N\oe uds} & \textbf{Dortoir} & \textbf{Classes} & \textbf{Filière} & \textbf{Classes} & \textbf{Genre} & \textbf{Classes} \\
 \midrule
-Caltech36 & 762 & \textbf{94.9\%} & 8 & 68.1\% & 2 \\
-Rice31 & 4\,083 & \textbf{92.1\%} & 9 & 61.5\% & 2 \\
-American75 & 6\,370 & 75.5\% & 25 & 58.4\% & 2 \\
-MIT8 & 6\,402 & 70.6\% & 63 & 66.3\% & 2 \\
-Duke14 & 9\,885 & 53.5\% & 135 & 70.5\% & 2 \\
-UNC28 & 18\,158 & 52.6\% & 93 & 63.1\% & 2 \\
-Texas84 & 36\,364 & 56.9\% & 92 & 61.2\% & 2 \\
-Simmons81 & 1\,510 & 40.0\% & 10 & \textbf{99.3\%} & 2 \\
+Caltech36 & 762 & \textbf{94.9\%} & 8 & 27.9\% & 30 & 68.1\% & 2 \\
+Rice31 & 4\,083 & \textbf{92.1\%} & 9 & 31.8\% & 46 & 61.5\% & 2 \\
+American75 & 6\,370 & 75.5\% & 25 & 28.8\% & 75 & 58.4\% & 2 \\
+MIT8 & 6\,402 & 70.6\% & 63 & 34.6\% & 43 & 66.3\% & 2 \\
+Duke14 & 9\,885 & 53.5\% & 135 & 29.6\% & 66 & 70.5\% & 2 \\
+UNC28 & 18\,158 & 52.6\% & 93 & 26.5\% & 73 & 63.1\% & 2 \\
+Texas84 & 36\,364 & 56.9\% & 92 & 30.6\% & 107 & 61.2\% & 2 \\
+Simmons81 & 1\,510 & 40.0\% & 10 & 25.9\% & 53 & \textbf{99.3\%} & 2 \\
 \bottomrule
 \end{tabular}
+\end{adjustbox}
 \end{table}
 
 Les résultats confirment et amplifient les observations faites sur l'homophilie. L'attribut dortoir se propage remarquablement bien à travers le graphe sur les campus organisés en \textit{Residential Colleges}. Caltech36 atteint 94.9\% de précision malgré 8 dortoirs possibles, et Rice31 culmine à 92.1\% avec 9 résidences. Ces deux universités fonctionnent selon un système de ``maisons'' où les étudiants partagent repas et activités, créant une homophilie résidentielle quasi-parfaite.
 
-Sur les grandes universités comme Duke14 (135 dortoirs) ou UNC28 (93 dortoirs), la précision reste honorable (53-55\%) malgré le nombre élevé de classes. Ramené au hasard (qui donnerait moins de 1\% sur Duke), ce score démontre que la structure du graphe encode efficacement l'information résidentielle.
+L'analyse de la filière d'études (\textit{Major}) révèle un signal intermédiaire. Avec une précision moyenne oscillant entre 25\% et 35\%, la propagation de labels fait nettement mieux que le hasard (qui serait inférieur à 2\% vu le nombre élevé de filières, souvent supérieur à 50). Cependant, ce score reste bien en deçà des performances obtenues pour le dortoir. Cela indique que si les étudiants tendent à avoir des amis dans leur filière, ce n'est pas le facteur déterminant de leurs interactions sociales.
+
+Sur les grandes universités comme Duke14 (135 dortoirs) ou UNC28 (93 dortoirs), la précision du dortoir reste honorable (53-55\%) malgré le nombre élevé de classes. Ramené au hasard (qui donnerait moins de 1\% sur Duke), ce score démontre que la structure du graphe encode efficacement l'information résidentielle.
 
 Le genre présente une précision modeste mais constante à travers les campus, oscillant entre 58\% et 70\%. Cette performance, à peine supérieure à un classifieur naïf pondéré par les fréquences de classes, confirme quantitativement que le genre ne structure pas les réseaux d'amitié universitaires.
 

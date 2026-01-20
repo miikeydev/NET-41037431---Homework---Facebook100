@@ -7,6 +7,7 @@ import networkx as nx
 import torch
 from sklearn.preprocessing import LabelEncoder
 from collections import defaultdict
+from tqdm import tqdm
 
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 OUT_DIR = "results/q5"
@@ -202,9 +203,9 @@ def main():
     print(f"Processing {len(target_graphs)} graphs...")
     
     all_rows = []
-    attributes = ["dorm", "major", "gender"]
+    attributes = ["student_fac", "major_index", "dorm", "year", "gender"]
     
-    for fname in target_graphs:
+    for fname in tqdm(target_graphs, desc="Processing graphs"):
         path = os.path.join(args.data_dir, fname)
         rows = run_experiment_on_graph(path, attributes, args.fractions, args.seed)
         all_rows.extend(rows)
